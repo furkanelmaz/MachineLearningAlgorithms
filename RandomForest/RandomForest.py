@@ -2,18 +2,18 @@ import random
 import pandas as pd
 import numpy as np
 from MachineLearningAlgorithms.RandomForest.DT_for_RF import DT_RF
-#import Trial_RF
 
 class RandomForest:
     
     def __init__(self,min_samples = 2, max_depth = 999, n_tree = 5, n_features=5):
         
-        self.n_tree = n_tree
-        self.min_samples = min_samples
-        self.max_depth = max_depth
-        self.counter = 0
-        self.best_entropy = 10
-        self.n_features = n_features
+        self.n_tree = n_tree # How many trees will be used in the forest
+        self.min_samples = min_samples # Same as original Decision Tree
+        self.max_depth = max_depth # Same as original Decision Tree
+        self.counter = 0 # Same as original Decision Tree
+        self.best_entropy = 10 # Same as original Decision Tree
+        self.n_features = n_features # Selects how many features will be used during growing
+                                     # the trees
     
     def train(self,df):
         
@@ -32,7 +32,8 @@ class RandomForest:
             
             bootstrapped_set.drop_duplicates(inplace=True)
             
-            # Send bootstrapped data set to the original decision tree algorithm
+            # Send bootstrapped data set to the original decision tree algorithm with twist
+            # (check DT_for_RF)
             self.trees.append(DT_RF(self.min_samples,self.max_depth,self.n_features))
             
             self.trees[i].train_a_tree(df)
