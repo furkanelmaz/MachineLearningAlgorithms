@@ -18,30 +18,32 @@ class KNN:
         # Not a real training, only importing the training set
         self.X_train = X_train
         self.y_train = y_train
+
+    # Distance calculator depends on the distance metric
+    # This function is called for one row of X_test, this row is substracted from each row of X_train
+    # then summed along columns to determine distances between each point of X_train and corresponding
+    # X_test row    
+    def __manhattan_distance(self,X_test):
+        
+        return np.sum( abs( self.X_train - X_test) , axis = 1)
     
-    def __distance(self,X_test):
+    def __euclidean_distance(self, X_test):
         
-        # Distance calculator depends on the distance metric
-        # This function is called for one row of X_test, this row is substracted from each row of X_train
-        # then summed along columns to determine distances between each point of X_train and corresponding
-        # X_test row
+        return np.sum( np.sqrt( (self.X_train - X_test) **2 ), axis = 1)
         
-        if self.dm == 'manhattan':
-            
-            return np.sum( abs( self.X_train - X_test) , axis = 1)
-        
-        elif self.dm == 'euclidean':
-            
-            return np.sum( np.sqrt( (self.X_train - X_test) **2 ), axis = 1)
-    
     def predict(self,X_test):
-    
+        
+        
+        # Dictionary for distance types
+        distance_metrics = {'manhattan': self.__manhattan_distance , 
+                    'euclidean': self.__euclidean_distance}
+        
         predictions = []
         
         for i in range(0,X_test.shape[0]):         
         
             #Calculate all distances for ith sample of test set
-            distance = self.__distance(X_test.iloc[i,:]) 
+            distance = distance_metrics[self.dm](X_test.iloc[i,:]) 
             
             #Find indices of k number of minimum distances
             neighbors = np.argsort(distance)[0:self.k] 
