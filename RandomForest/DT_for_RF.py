@@ -2,6 +2,16 @@ import random
 import pandas as pd
 import numpy as np
 
+# This decision tree implementation is for random forest algorithm, only difference from
+# original implementation is n_feature variable asked from the random forest algorithm
+# this variable adjust the choice of number of features used during the training of trees
+# of the random forest, from given number of features (n) algorithm selects features randomly 
+# (number of features given acquired from n_features) and trains the tree with selected
+# features
+
+# This implementation difference is in _all_possible_splits function
+
+
 class DT_RF:
     
     def __init__(self, min_samples=2, max_depth=999, n_features = 5):
@@ -47,12 +57,10 @@ class DT_RF:
     
     def _all_possible_splits(self,data):
         
+        
+        ## Randomly select n_features number of features from all features
         splits = {}
-        
-        #Randomly select user specified number of features from the data set
-        
         all_splits = list(range(0,data.shape[1]-1))
-        
         chosen_splits = random.sample(all_splits,self.n_features)
         
         # Takes average of each 2 unique sample of a feature and calls it a potential split
