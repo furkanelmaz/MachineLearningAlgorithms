@@ -15,6 +15,8 @@ class RandomForestImputer:
     # of implementations explained ahead.
     # If the missing value is string change the value with the mode of the corresponding column
     # If the missing value is numeric change the value with median of the corresponding column
+        
+        self.dummy = 0 # Dummy variable to prevent overlapping print statements
     def _initial_replace(self,df_m,missing_column):
         
         m,n = df_m.shape
@@ -179,10 +181,12 @@ class RandomForestImputer:
                     
                     # Change the initialy replaced dataframe with imputed one for repetition
                     df_initial_replaced.iloc[-1,:] = self.df.iloc[j,:]
-                
-
-            print(f"Remaining Missing Value: {self.df.isnull().sum().sum()} / {total_miss}")
-                
+            
+            # Use dummy varible to prevent printing of this section when imputing test set
+            if self.dummy == 0:
+                print(f"Remaining Missing Value: {self.df.isnull().sum().sum()} / {total_miss}")
+            else:
+                pass
         return self.df
     
     ## Only for imputation of the test set, for given dataframe which contains single missing
@@ -226,6 +230,8 @@ class RandomForestImputer:
     # 4- For each dataframe run a random forest algorithm to classify for the missing value row
     # 5- Impute the missing value with highest scored dataset
     def impute_test_data(self,df_train,df_test):
+        
+        self.dummy = 1
         
         mt,nt = df_train.shape
         
