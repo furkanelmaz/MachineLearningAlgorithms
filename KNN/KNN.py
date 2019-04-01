@@ -13,11 +13,11 @@ class KNN:
         self.dm = distancemetric
         #self.type = type
     
-    def train(self,X_train,y_train):
+    def train(self,df):
         
         # Not a real training, only importing the training set
-        self.X_train = X_train
-        self.y_train = y_train
+        self.X_train = df.iloc[:,:-1]
+        self.y_train = df.iloc[:,-1]
 
     # Distance calculator depends on the distance metric
     # This function is called for one row of X_test, this row is substracted from each row of X_train
@@ -32,7 +32,6 @@ class KNN:
         return np.sum( np.sqrt( (self.X_train - X_test) **2 ), axis = 1)
         
     def predict(self,X_test):
-        
         
         # Dictionary for distance types
         distance_metrics = {'manhattan': self.__manhattan_distance , 
