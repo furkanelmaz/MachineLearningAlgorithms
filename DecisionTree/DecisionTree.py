@@ -296,9 +296,9 @@ class DecisionTree:
     
         predictions = []
         
-        for n_samples in range(0, test_data.shape[0]):
+        for sample_n in range(0, test_data.shape[0]):
             
-            prediction = self._predict_for_one(test_data.iloc[n_samples])
+            prediction = self._predict_for_one(test_data.iloc[sample_n])
             predictions.append(prediction)
         
         return np.array(predictions)
