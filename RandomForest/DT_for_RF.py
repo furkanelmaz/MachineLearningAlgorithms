@@ -26,9 +26,7 @@ class DT_RF:
         
         y = data[:,-1]
         # If output column contains only one class return true otherwise return false
-        # or if the best entropy is 1 which decision tree can't seperate any further
-        # return true
-        if ( len( np.unique(y) ) == 1 ) or (self.best_entropy == 1):
+        if ( len( np.unique(y) ) == 1 ):
             
             return True
         
@@ -212,6 +210,12 @@ class DT_RF:
             # Split data into 2 parts from given best split
             data_greater, data_less = self._split_data(data,best_column,best_value)
             
+            # If at least one of the splitted data is empty, go the base case 
+            if len(data_greater) == 0 or len(data_less) == 0:
+                
+                classification = self._classify(data)
+                
+                return classification
             
             # If the split occured in a categorical column, question will be is the data
             # equal (yes_answer) or not equal (no_answer) to the best_value
