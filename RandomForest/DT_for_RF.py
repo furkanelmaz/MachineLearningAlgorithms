@@ -166,11 +166,11 @@ class DT_RF:
                 if current_entropy <= self.best_entropy:
                     
                     self.best_entropy = current_entropy
-                    best_column_split = i
-                    best_value_split = j
+                    self.best_column_split = i
+                    self.best_value_split = j
         
     
-        return best_column_split, best_value_split
+        return self.best_column_split, self.best_value_split
     
     
     def train_a_tree(self,data):
