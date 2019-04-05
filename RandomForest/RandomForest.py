@@ -30,7 +30,7 @@ class RandomForest:
             
             bootstrapped_set = df.iloc[bootstrapped_ind,:].copy()
             
-            bootstrapped_set.drop_duplicates(inplace=True)
+            #bootstrapped_set.drop_duplicates(inplace=True)
             
             # Send bootstrapped data set to the original decision tree algorithm with twist
             # (check DT_for_RF)
