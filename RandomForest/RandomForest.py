@@ -29,14 +29,12 @@ class RandomForest:
             bootstrapped_ind = random.choices(total_list, k = len(total_list))
             
             bootstrapped_set = df.iloc[bootstrapped_ind,:].copy()
-            
-            #bootstrapped_set.drop_duplicates(inplace=True)
-            
+                        
             # Send bootstrapped data set to the original decision tree algorithm with twist
             # (check DT_for_RF)
             self.trees.append(DT_RF(self.min_samples,self.max_depth,self.n_features))
             
-            self.trees[i].train_a_tree(df)
+            self.trees[i].train_a_tree(bootstrapped_set)
     
     # Predict the output of the new data using the growed trees, use majority vote to decide
     # final outcome
