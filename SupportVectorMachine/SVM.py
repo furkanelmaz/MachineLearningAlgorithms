@@ -3,7 +3,6 @@ import numpy as np
 import cvxopt
 import cvxopt.solvers
 
-
 class SVM:
     
     def __init__(self, C = 1, kernel = 'linear'):
